@@ -492,19 +492,23 @@ def foodHeuristic(state, problem):
     # return heuristic_val
     food_pts = foodGrid.asList()
     h = 0
-    ans = position
-    dist = sys.maxint
+    min_pt = position
+    max_pt = position
+    dist_min = sys.maxint
+    dist_max = -sys.maxint
     for pts in food_pts:
-        if dist > util.manhattanDistance(position,pts):
-            dist = util.manhattanDistance(position,pts)
-            ans = pts
-    close_pt = ans
-    h = dist
+        if dist_min > util.manhattanDistance(position,pts):
+            dist_min = util.manhattanDistance(position,pts)
+            min_pt = pts
+        if dist_max < util.manhattanDistance(position,pts):
+            dist_max = util.manhattanDistance(position,pts)
+            max_pt = pts
+    #close_pt = ans
+    h = util.manhattanDistance(min_pt,max_pt) + util.manhattanDistance(min_pt,position)
     # food_pts.remove(ans)
-    for pt in food_pts:
-        if (pt != close_pt) and (pt[0] == close_pt[0] or pt[0] == position[0] or pt[1] == close_pt[1] or pt[1] == position[1]):
-            h += 1   
-    "*** YOUR CODE HERE ***"
+    #for pt in food_pts:
+        #if (pt != close_pt) and (pt[0] != close_pt[0] and pt[0] != position[0] and pt[1] == close_pt[1] and pt[1] == position[1]):
+            #h += 1   
     return h
 
 # def heuristic_5(position, goals_list, walls):
